@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "base"
+version = "0.1.0"
+description = ""
+authors = ["chocobaby727 <chocobabion1152@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["all"], version = "^0.110.0"}
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.3.3"
+pytest = "^8.1.1"
+pytest-mock = "^3.14.0"
+mypy = "^1.9.0"
+poethepoet = "^0.25.0"
+pre-commit = "^3.7.0"
+typer = "^0.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+start = "poetry run uvicorn '${APP_PATH}' --reload"
+format = "poetry run ruff format"
+lint = "poetry run ruff check --select I --fix"
+test = "poetry run pytest"
+export-openapi = "poetry run python scripts/export-openapi.py --app-path '${APP_PATH}'"
+
+[tool.poe.env]
+APP_PATH = "main:app"

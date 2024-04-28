@@ -1,0 +1,287 @@
+openapi: 3.1.0
+info:
+  title: FastAPI
+  version: 0.1.0
+paths:
+  /users/:
+    get:
+      tags:
+      - users
+      summary: Read Users
+      operationId: read_users_users__get
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/me:
+    get:
+      tags:
+      - users
+      summary: Read User Me
+      operationId: read_user_me_users_me_get
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/{username}:
+    get:
+      tags:
+      - users
+      summary: Read User
+      operationId: read_user_users__username__get
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Username
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /items/:
+    get:
+      tags:
+      - items
+      summary: Read Items
+      operationId: read_items_items__get
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Token
+      - name: x-token
+        in: header
+        required: true
+        schema:
+          type: string
+          title: X-Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /items/{item_id}:
+    get:
+      tags:
+      - items
+      summary: Read Item
+      operationId: read_item_items__item_id__get
+      parameters:
+      - name: item_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Item Id
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Token
+      - name: x-token
+        in: header
+        required: true
+        schema:
+          type: string
+          title: X-Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - items
+      - custom
+      summary: Update Item
+      operationId: update_item_items__item_id__put
+      parameters:
+      - name: item_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Item Id
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Token
+      - name: x-token
+        in: header
+        required: true
+        schema:
+          type: string
+          title: X-Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not found
+        '403':
+          description: Operation forbidden
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/:
+    post:
+      tags:
+      - admin
+      summary: Update Admin
+      operationId: update_admin_admin__post
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Token
+      - name: x-token
+        in: header
+        required: true
+        schema:
+          type: string
+          title: X-Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '418':
+          description: I'm a teapot
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /:
+    get:
+      summary: Root
+      operationId: root__get
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+          title: Token
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
